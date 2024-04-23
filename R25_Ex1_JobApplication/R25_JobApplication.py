@@ -141,7 +141,6 @@ class App(ctk.CTk):
                                    
         self.chk_12.grid(row=12, column=0, padx=5, pady=2, sticky="ew")
 
-        self.list_checkbox = [self.chk_1,self.chk_2,self.chk_3,self.chk_4,self.chk_5,self.chk_6,self.chk_7,self.chk_8,self.chk_9,self.chk_10,self.chk_11,self.chk_12]
 
         ########  FRAME Interet
         frm_interet = tk.Frame(
@@ -182,13 +181,6 @@ class App(ctk.CTk):
                                     padx=20, pady=2,
                         sticky="nsew")
 
-        # Résumé de l'application
-        self.btn_resumer = ctk.CTkButton(master=frm_container,
-                                        text="Résumé de l'application")
-        self.btn_resumer.grid(row=3, column=0,
-                                        columnspan=2, padx=20,
-                                        pady=2, sticky="ew")
-
         # Text Box resume
         self.txt_resume = ctk.CTkTextbox(master=frm_container,
                                         width=200,
@@ -198,14 +190,31 @@ class App(ctk.CTk):
                             pady=2, sticky="nsew")
 
 
-    # Voir ÉNONCÉ
-    def resumer(self):
-        pass
+        # Voir ÉNONCÉ
+        def resumer():
+            self.txt_resume.delete("0.0", "end")
+            text_a_afficher = creer_resume()
+            self.txt_resume.insert("0.0", text_a_afficher)     
 
-    # Voir ÉNONCÉ
+        # Voir ÉNONCÉ
 
-    def creer_resume(self):
-        pass
+        def creer_resume():
+            liste_checkbox = [self.chk_1, self.chk_2, self.chk_3, self.chk_4, self.chk_5, self.chk_6, self.chk_7, self.chk_8, self.chk_9, self.chk_10, self.chk_11, self.chk_12]
+            nbr_checkbox_valid = 0
+            for checkbox in liste_checkbox:
+                value = checkbox.get()
+                if value == 1:
+                    nbr_checkbox_valid += 1
+            text_a_afficer = f"Salut {self.ent_nom.get()}\nMerci de votre application chez nous.\nVous avez de l'expérience dans {nbr_checkbox_valid} point(s) sur 12 possibles.\nL'intérêt principal mentionné étant: {self.cbo_interet.get()}\nNous vous donnerons une réponse sous peu."
+            return text_a_afficer
+            
+        # Résumé de l'application
+        self.btn_resumer = ctk.CTkButton(master=frm_container,
+                                            text="Résumé de l'application", command=resumer)
+        self.btn_resumer.grid(row=3, column=0,
+                                            columnspan=2, padx=20,
+                                            pady=2, sticky="ew")
+                
 
 if __name__ == "__main__":
     app = App()

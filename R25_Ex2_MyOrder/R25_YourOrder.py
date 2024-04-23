@@ -17,15 +17,63 @@ prix_total = 0
 
 #  VOIR ÉNONCÉ
 def ajouter_smarin():
-    pass
+    global ta_commande
+    global prix_total
+    prix = 0
+    size = size_smarin.get()
+    choix = choix_smarin.get()
+    if size == "10":
+        if choix == "steak": 
+            prix += 14.99
+        elif choix == "pepperoni": 
+            prix += 14.99
+        elif choix == "duchef":
+            prix+= 15.99
+    elif size == "14":
+        if choix == "steak": 
+            prix += 16.99
+        elif choix == "pepperoni": 
+            prix += 16.99
+        elif choix == "duchef":
+            prix+= 17.99
+    prix_total += prix
+    ta_commande = ta_commande + f"\nUn sous-marin {choix} {size}po: {str(prix)}$"
 
 #  VOIR ÉNONCÉ               
 def ajouter_pizza():
-    pass
+    global ta_commande
+    global prix_total
+    prix = 0
+    size = size_pizza.get()
+    choix = choix_pizza.get()
+    if size == "7":
+        if choix == "nature": 
+            prix += 14.99
+        elif choix == "vegetarienne": 
+            prix += 14.99
+        elif choix == "toute garnie":
+            prix+= 15.99
+    elif size == "14":
+        if choix == "nature": 
+            prix += 16.99
+        elif choix == "vegetarienne": 
+            prix += 16.99
+        elif choix == "toute garnie":
+            prix+= 17.99
+    prix_total += prix
+    ta_commande = ta_commande + f"\nUne pizza {choix} {size}po: {str(prix)}$"
+
 
 #  VOIR ÉNONCÉ               
 def ajouter():
-    pass
+    if int(chk_pizza.get()) == 1:
+        ajouter_pizza()
+    if int(chk_smarin.get()) == 1:
+        ajouter_smarin()
+    displayBox.delete("0.0", "end")
+    displayBox.insert("0.0", ta_commande + f"\n\t Pour un total de: {round(prix_total, 2)}$")
+
+
 
     
 window.rowconfigure((0,1,2,3), weight=1, minsize=150)
@@ -84,7 +132,7 @@ smarin14po = ttk.Radiobutton(frm_smarin_choix, text='14"', variable=size_smarin,
 smarin10po.grid(row=5, column=0,padx=2,pady=2,sticky="w")
 smarin14po.grid(row=6, column=0,padx=2,sticky="w")
 
-btn_voir_ajout_smarin = ttk.Button(frm_sousmarin, text="Ajouter")
+btn_voir_ajout_smarin = ttk.Button(frm_sousmarin, text="Ajouter",command = ajouter )
 btn_voir_ajout_smarin.grid(column=2, row=3, sticky='w') 
 
 
@@ -133,7 +181,7 @@ pizza14po = ttk.Radiobutton(frm_pizza_choix, text='14"', variable=size_pizza, va
 pizza7po.grid(row=5, column=0,padx=2,pady=2,sticky="w")
 pizza14po.grid(row=6, column=0,padx=2,sticky="w")
 
-btn_voir_ajout_pizza = ttk.Button(frm_pizza, text="Ajouter")
+btn_voir_ajout_pizza = ttk.Button(frm_pizza, text="Ajouter", command = ajouter)
 btn_voir_ajout_pizza.grid(column=2, row=3, sticky='w') 
 
 
@@ -147,6 +195,7 @@ frm_voirCommande.grid(row=3, column=0, columnspan=2, padx=5, pady=5)
 # Text Box
 displayBox = ctk.CTkTextbox(master=frm_voirCommande, width=400, height=200, border_width=2)
 displayBox.grid(row=1, column=0, sticky="nsew", pady=0)
+
 
 
 window.mainloop()
